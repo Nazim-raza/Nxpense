@@ -1,0 +1,81 @@
+.register-page-body {
+  font-family: Arial, sans-serif;
+  background-color: #49f54c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.register-page-body form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .register-page-body h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .form-label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .mb-3 {
+    margin-bottom: 16px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  }
+  
+  .btn-primary {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (min-width: 768px) {
+    .register-page-body form {
+      padding: 30px;
+    }
+  
+    .form-label {
+      font-size: 14px;
+    }
+  
+    .form-control {
+      font-size: 18px;
+    }
+  
+    .btn-primary {
+      font-size: 18px;
+    }
+  }
+  
