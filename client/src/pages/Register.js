@@ -8,7 +8,7 @@ const Register = () => {
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-
+  //Handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.name || !input.email || !input.password) {
