@@ -25,7 +25,7 @@ export const createGroup = async (req, res) => {
   }
 };
 
-//Add user to group
+//=============Add user to group=================
 
 export const addUserToGroup = async (req, res) => {
   try {
@@ -60,5 +60,15 @@ export const addUserToGroup = async (req, res) => {
       .send({ success: true, message: "User Added to group", group });
   } catch (error) {
     res.status(404).send({ success: false, message: "server error", error });
+  }
+};
+
+//==============Get Group Details==================
+
+export const getGroupDetails = async (req, res) => {
+  try {
+    const res = await Group.findById();
+  } catch (error) {
+    console.log(error);
   }
 };

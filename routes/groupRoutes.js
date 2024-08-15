@@ -10,10 +10,10 @@ router.post("/create-group", createGroup);
 // //add user to group
 router.post("/:groupId/adduser", addUserToGroup);
 
+// //get group details
+router.get("/:groupId", getGroupDetails);
+
 // //add expense to group
 // router.post("/:groupID/addexpense", addExpenseToGroup);
-
-// //get group details
-// router.get("/:groupId", getGroupDetails);
 
 export default router;

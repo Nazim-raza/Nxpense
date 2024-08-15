@@ -17,9 +17,8 @@ const Register = () => {
     }
     try {
       const res = await axios.post("/api/v1/user/create", input);
-      if (res.status === 200) {
-        console.log(res.data);
-      }
+      console.log(res.data);
+      alert("Register SuccessFully");
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,5 @@
 import React from "react";
-import Register from "./Register";
+import { Allusers } from "./Allusers";
 
 const Home = () => {
   return (
@@ -73,6 +73,7 @@ const Home = () => {
           </div>
         </div>
       </nav>
+      <Allusers />
     </div>
   );
 };

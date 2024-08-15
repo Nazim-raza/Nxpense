@@ -37,7 +37,8 @@ export const createUser = async (req, res) => {
   }
 };
 
-//Get All users
+//===========Get All users==============
+
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({});
