@@ -6,6 +6,7 @@ export const CreateGroup = () => {
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+  //Hii
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.name) {

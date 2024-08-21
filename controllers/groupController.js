@@ -67,6 +67,7 @@ export const addUserToGroup = async (req, res) => {
 
 export const getAllGroups = async (req, res) => {
   try {
+<<<<<<< HEAD
     const groups = await Group.find({});
 
     if (groups.length === 0) {
@@ -96,6 +97,9 @@ export const getGroupinfo = async (req, res) => {
       });
     }
     res.status(200).send(group);
+=======
+    const res = await Group.findById(groupId);
+>>>>>>> 305485bfdd4a7454655f22de37a407d5286f17f9
   } catch (error) {
     console.log(error);
   }
