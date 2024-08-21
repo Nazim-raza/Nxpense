@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../style/Allusers.css";
+import { Groups } from "./Group/Groups";
 
 export const Allusers = () => {
   const [users, setUsers] = useState([]);
@@ -10,6 +11,7 @@ export const Allusers = () => {
       try {
         const res = await axios.get("/api/v1/user/getusers");
         setUsers(res.data.users);
+        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -30,7 +32,7 @@ export const Allusers = () => {
   return (
     <>
       <div className="table-container">
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -48,6 +50,7 @@ export const Allusers = () => {
             ))}
           </tbody>
         </table>
+        <Groups />
       </div>
     </>
   );

@@ -1,5 +1,10 @@
 import express from "express";
-import { addUserToGroup, createGroup } from "../controllers/groupController.js";
+import {
+  addUserToGroup,
+  createGroup,
+  getAllGroups,
+  getGroupinfo,
+} from "../controllers/groupController.js";
 
 const router = express.Router();
 
@@ -11,7 +16,8 @@ router.post("/create-group", createGroup);
 router.post("/:groupId/adduser", addUserToGroup);
 
 // //get group details
-router.get("/:groupId", getGroupDetails);
+router.get("/groups", getAllGroups);
+router.get("/:groupId", getGroupinfo);
 
 // //add expense to group
 // router.post("/:groupID/addexpense", addExpenseToGroup);

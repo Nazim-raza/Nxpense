@@ -4,12 +4,12 @@ import User from "../models/userModel.js";
 //Create Group
 export const createGroup = async (req, res) => {
   try {
-    const { name, userIds } = req.body;
+    const { name } = req.body;
 
-    if (!name || !userIds) {
-      res.status(400).send({ success: false, message: "name & User must" });
+    if (!name) {
+      res.status(400).send({ success: false, message: "Group name must" });
     }
-    const group = new Group(req.body);
+    const group = new Group({ name });
     await group.save();
     res.status(200).send({
       success: true,
@@ -63,11 +63,39 @@ export const addUserToGroup = async (req, res) => {
   }
 };
 
+//=============getAllGroups=========================
+
+export const getAllGroups = async (req, res) => {
+  try {
+    const groups = await Group.find({});
+
+    if (groups.length === 0) {
+      return res.status(404).send({
+        success: false,
+        message: "Group not found",
+      });
+    }
+    res.status(200).send(groups);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //==============Get Group Details==================
 
-export const getGroupDetails = async (req, res) => {
+export const getGroupinfo = async (req, res) => {
   try {
-    const res = await Group.findById();
+    const group = await Group.findById(req.params.groupId)
+      .populate("users")
+      .populate("expenses");
+
+    if (!group) {
+      return res.status(404).send({
+        success: false,
+        message: "Group not found",
+      });
+    }
+    res.status(200).send(group);
   } catch (error) {
     console.log(error);
   }

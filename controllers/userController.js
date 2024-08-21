@@ -29,7 +29,9 @@ export const createUser = async (req, res) => {
 
     // Respond with the created user
     res.status(201).json({
-      user,
+      name,
+      email,
+      password: hashedPassword,
     });
   } catch (error) {
     console.log({ message: "Error in creating user", error });
@@ -58,7 +60,7 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-//getUserById
+//===============getUserById==================
 export const getUserById = async (req, res) => {
   const user1 = await User.findById(req.params.id);
 
