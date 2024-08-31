@@ -1,9 +1,20 @@
 import express from "express";
-import { addExpense } from "../controllers/expenseController.js";
+import {
+  addExpense,
+  deleteExpense,
+  getExpenses,
+} from "../controllers/expenseController.js";
+import { requireSignIn } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-//routes
-router.post("/add-expense", addExpense);
+// Add expense --routes
+router.post("/add-expense", requireSignIn, addExpense);
+
+//Get expenses
+router.get("/get-expenses", requireSignIn, getExpenses);
+
+//Delete expenses
+router.delete("/del-expense/:id", requireSignIn, deleteExpense);
 
 export default router;

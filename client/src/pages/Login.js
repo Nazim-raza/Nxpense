@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import "../style/Login.css";
 import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/auths";
 
 const Login = () => {
   const [input, setInput] = useState({ email: "", password: "" });
+  const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -18,7 +23,19 @@ const Login = () => {
     }
     try {
       const res = await axios.post("/api/v1/user/login", input);
-      alert("Login Successfully");
+      if (res && res.data.success) {
+        alert(res.data && res.data.message);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        alert("Login Successfully");
+        navigate("/allusers");
+      } else {
+        alert(res.data.message);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +84,7 @@ const Login = () => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          SignUp
+          Sign In
         </button>
       </form>
     </div>

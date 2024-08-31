@@ -1,24 +1,31 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Groupinfo } from "./Groupinfo";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auths";
 
 export const Groups = () => {
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
 
+  const [auth] = useAuth();
+
   useEffect(() => {
     const getGroups = async () => {
       try {
-        const grp = await axios.get(`/api/v1/group/groups`);
-        setGroups(grp.data);
+        const config = {
+          headers: {
+            Authorization: `${auth.token}`,
+          },
+        };
+        const grp = await axios.get(`/api/v1/group/groups`, config);
         console.log(grp.data);
+        setGroups(grp.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getGroups();
-  }, []);
+    if (auth?.token) getGroups();
+  }, [auth?.token]);
 
   const handleGroupClick = (groupid) => {
     // Navigate to the Groupinfo page with the selected group ID as a URL parameter

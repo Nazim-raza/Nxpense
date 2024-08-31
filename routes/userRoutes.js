@@ -5,6 +5,7 @@ import {
   getUserById,
   loginUser,
 } from "../controllers/userController.js";
+import { requireSignIn } from "../middlewares/authMiddleware.js";
 
 //Router object
 const router = express.Router();
@@ -17,7 +18,7 @@ router.post("/create", createUser);
 router.post("/login", loginUser);
 
 //Get Users
-router.get("/getusers", getAllUsers);
-router.get("/:id", getUserById);
+router.get("/getusers", requireSignIn, getAllUsers);
+router.get("/:id", requireSignIn, getUserById);
 
 export default router;

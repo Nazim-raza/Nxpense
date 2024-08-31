@@ -1,15 +1,28 @@
 import Group from "../models/groupModel.js";
 import User from "../models/userModel.js";
 
-//Create Group
+//===============Create Group==================
 export const createGroup = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, userIds } = req.body;
 
-    if (!name) {
-      res.status(400).send({ success: false, message: "Group name must" });
+    if (!name || !userIds) {
+      return res.status(400).send({
+        success: false,
+        message: "Please provide all required details",
+      });
     }
-    const group = new Group({ name });
+
+    // Check if all userIds exist in the User collection
+    const users = await User.find({ _id: { $in: userIds } });
+    if (!users) {
+      return res
+        .status(404)
+        .send({ success: false, message: "One or more users not found" });
+    }
+
+    const group = new Group({ name, users: userIds });
+
     await group.save();
     res.status(200).send({
       success: true,
@@ -19,12 +32,11 @@ export const createGroup = async (req, res) => {
   } catch (error) {
     res.status(400).send({
       success: false,
-      message: "group failed",
+      message: "Group creation failed",
       error,
     });
   }
 };
-
 //=============Add user to group=================
 
 export const addUserToGroup = async (req, res) => {
@@ -98,5 +110,27 @@ export const getGroupinfo = async (req, res) => {
     res.status(200).send(group);
   } catch (error) {
     console.log(error);
+  }
+};
+
+//==========SearchUser to add in the Group==============
+
+export const searchUsers = async (req, res) => {
+  try {
+    const keyword = req.query.search
+      ? {
+          $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { email: { $regex: req.query.search, $options: "i" } },
+          ],
+        }
+      : {};
+
+    const users = await User.find(keyword).find({
+      _id: { $ne: req.user?._id },
+    });
+    res.status(200).send(users);
+  } catch (error) {
+    console.log("Error in Search user");
   }
 };

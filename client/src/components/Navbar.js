@@ -1,6 +1,23 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/auths";
+import { token } from "morgan";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
+
+  const logout = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    alert("loged out");
+    navigate("/");
+  };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -71,6 +88,7 @@ export const Navbar = () => {
             </ul>
           </div>
         </div>
+        <button onClick={logout}>Log-Out</button>
       </nav>
     </div>
   );

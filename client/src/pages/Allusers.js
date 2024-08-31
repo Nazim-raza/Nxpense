@@ -2,22 +2,29 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../style/Allusers.css";
 import { Groups } from "./Group/Groups";
+import { useAuth } from "../context/auths";
 
 export const Allusers = () => {
   const [users, setUsers] = useState([]);
+  const [auth, setAuth] = useAuth();
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get("/api/v1/user/getusers");
+        const config = {
+          headers: {
+            Authorization: `${auth.token}`,
+          },
+        };
+        const res = await axios.get("/api/v1/user/getusers", config);
         setUsers(res.data.users);
         console.log(res.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getUser();
-  }, []);
+    if (auth?.token) getUser();
+  }, [auth?.token]);
 
   useEffect(() => {
     // Add a class to the body when the component mounts

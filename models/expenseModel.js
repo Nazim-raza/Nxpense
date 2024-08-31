@@ -6,9 +6,9 @@ const expenseSchema = new mongoose.Schema({
     required: true,
   },
 
-  ammount: {
+  amount: {
     type: Number,
-    required: [true, "Ammount Required"],
+    required: [true, "amount Required"],
   },
   createdAt: {
     type: Date,
