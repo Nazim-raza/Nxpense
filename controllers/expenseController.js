@@ -1,6 +1,6 @@
 import Expense from "../models/expenseModel.js";
 
-//Add expenses
+//========Add expenses============
 export const addExpense = async (req, res) => {
   const { note, amount } = req.body;
   if (!note || !amount) {

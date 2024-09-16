@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../style/Allusers.css";
 import { Groups } from "./Group/Groups";
+import { CreateGroup } from "./Group/CreateGroup";
 import { useAuth } from "../context/auths";
 
 export const Allusers = () => {
@@ -39,11 +40,12 @@ export const Allusers = () => {
   return (
     <>
       <div className="table-container">
+        <Groups />
         <table className="table">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Name</th>
+              <th scope="col">Friends</th>
               <th scope="col">Email</th>
             </tr>
           </thead>
@@ -57,7 +59,7 @@ export const Allusers = () => {
             ))}
           </tbody>
         </table>
-        <Groups />
+        <CreateGroup />
       </div>
     </>
   );

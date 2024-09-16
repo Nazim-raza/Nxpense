@@ -4,7 +4,7 @@ import { AutoComplete, Input } from "antd";
 import { useAuth } from "../../context/auths";
 
 export const CreateGroup = () => {
-  const [input, setInput] = useState({ name: "", userIds: [] });
+  const [input, setInput] = useState({ name: "", userEmails: [] });
   const [options, setOptions] = useState([]);
   const [auth] = useAuth(); // Use the useAuth hook to get the auth context
 
@@ -24,8 +24,8 @@ export const CreateGroup = () => {
         config
       );
       const users = res.data.map((user) => ({
-        value: user._id,
-        label: user.name,
+        value: user.email, // Use email instead of ID for selection
+        label: `${user.name} (${user.email})`,
       }));
       setOptions(users);
     } catch (error) {
@@ -34,26 +34,39 @@ export const CreateGroup = () => {
   };
 
   const handleSelect = (value) => {
-    // Add selected user's ID to the userIds array
+    // Add selected user's email to the userEmails array if not already included
     setInput((prevInput) => ({
       ...prevInput,
-      userIds: [...prevInput.userIds, value],
+      userEmails: prevInput.userEmails.includes(value)
+        ? prevInput.userEmails
+        : [...prevInput.userEmails, value],
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input.name || input.userIds.length === 0) {
+
+    // Automatically add the authenticated user's email to the userEmails array if not already included
+    const updatedUserEmails = input.userEmails.includes(auth.user.email)
+      ? input.userEmails
+      : [...input.userEmails, auth.user.email];
+
+    if (!input.name || updatedUserEmails.length === 0) {
       alert("Please fill all details");
       return;
     }
+
     try {
       const config = {
         headers: {
           Authorization: `${auth.token}`,
         },
       };
-      const res = await axios.post("/api/v1/group/create-group", input, config);
+      const res = await axios.post(
+        "/api/v1/group/create-group",
+        { ...input, userEmails: updatedUserEmails },
+        config
+      );
       alert("Group Created Successfully");
     } catch (error) {
       console.log("Error creating group:", error);
@@ -80,8 +93,8 @@ export const CreateGroup = () => {
           <AutoComplete
             options={options}
             onSearch={handleSearch}
-            onSelect={handleSelect} // Add this line to handle user selection
-            placeholder="Add Username or Email"
+            onSelect={handleSelect}
+            placeholder="Add User Emails (Separate by commas)"
             filterOption={false}
           >
             <Input />

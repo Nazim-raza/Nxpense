@@ -24,7 +24,7 @@ export const Expense = () => {
         },
       };
       const res = await axios.post(
-        "/api/v1/expense/add-expense",
+        `/api/v1/expense/add-expense`,
         input,
         config
       );
@@ -43,7 +43,7 @@ export const Expense = () => {
             Authorization: `${auth.token}`,
           },
         };
-        const exp = await axios.get("/api/v1/expense/get-expenses", config);
+        const exp = await axios.get(`/api/v1/expense/get-expenses`, config);
         setExpenses(exp.data.expenses);
         console.log(exp.data);
       } catch (error) {

@@ -9,23 +9,45 @@ export const Groups = () => {
 
   const [auth] = useAuth();
 
+  // Fetch Groups for the Logged-in User
   useEffect(() => {
-    const getGroups = async () => {
+    const fetchGroups = async () => {
       try {
         const config = {
           headers: {
             Authorization: `${auth.token}`,
           },
         };
-        const grp = await axios.get(`/api/v1/group/groups`, config);
-        console.log(grp.data);
-        setGroups(grp.data);
+        const res = await axios.get(`/api/v1/group/user-groups`, config);
+        console.log(res.data);
+        setGroups(res.data.groups);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching groups", error);
       }
     };
-    if (auth?.token) getGroups();
+
+    if (auth?.token) {
+      fetchGroups();
+    }
   }, [auth?.token]);
+
+  // useEffect(() => {
+  //   const getGroups = async () => {
+  //     try {
+  //       const config = {
+  //         headers: {
+  //           Authorization: `${auth.token}`,
+  //         },
+  //       };
+  //       const grp = await axios.get(`/api/v1/group/groups`, config);
+  //       console.log(grp.data);
+  //       setGroups(grp.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   if (auth?.token) getGroups();
+  // }, [auth?.token]);
 
   const handleGroupClick = (groupid) => {
     // Navigate to the Groupinfo page with the selected group ID as a URL parameter
