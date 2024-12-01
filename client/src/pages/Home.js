@@ -8,7 +8,7 @@ import Login from "./Login";
 const Home = () => {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <Login />
     </div>
   );
